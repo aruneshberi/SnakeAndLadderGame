@@ -7,11 +7,11 @@ player=1
 playerPosition=0
 dieRandomNumber=0
 checkPosition=0 
-
+dieCounter=0
 declare NO_PLAY=1
 declare LDDER=2
 declare SNAKE=3
-
+declare -A diedictionary 
 
 function winingPosition() {
 
@@ -19,10 +19,15 @@ function winingPosition() {
     do
         
          dice
+       
          if [ $playerPosition -gt 100 ]
          then
              playerPosition=$(( $playerPosition - $dieRandomNumber ))
+         else
+         diedictionary[$dieCounter]=$playerPosition
+         dieCounter=$(( $dieCounter + 1 ))
          fi
+         
        
     done
 }
@@ -30,6 +35,7 @@ function winingPosition() {
 function dice() {
 
 dieRandomNumber=$(( ( RANDOM % 6 ) + 1 ))
+
 checkPosition=$(( ( RANDOM % 3 ) + 1 ))
 case $checkPosition in
    $NO_PLAY)
@@ -59,6 +65,9 @@ function playerPostions() {
 	 echo $playerPosition
      
 }
-
-
+ 
 winingPosition
+for key in ${!diedictionary[@]}
+do 
+	echo "count:" $key " position:" ${diedictionary[$key]}
+done
