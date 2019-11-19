@@ -12,13 +12,19 @@ declare NO_PLAY=1
 declare LDDER=2
 declare SNAKE=3
 
-function winingPosition() {
-while [ $playerPosition -le 100 ]
-do
-	dice
-        echo "play"
-done
 
+function winingPosition() {
+
+    while [ $playerPosition -lt 100 ]
+    do
+        
+         dice
+         if [ $playerPosition -gt 100 ]
+         then
+             playerPosition=$(( $playerPosition - $dieRandomNumber ))
+         fi
+       
+    done
 }
 
 function dice() {
@@ -39,6 +45,8 @@ case $checkPosition in
 esac
 
 }
+
+
 function playerPostions() {
          
          if [ $1 -gt 0 ]
@@ -51,4 +59,6 @@ function playerPostions() {
 	 echo $playerPosition
      
 }
+
+
 winingPosition
